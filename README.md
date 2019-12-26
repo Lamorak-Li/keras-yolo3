@@ -9,6 +9,12 @@ A Keras implementation of YOLOv3 (Tensorflow backend) inspired by [allanzelener/
 
 ---
 
+## My Modicafications
+
+1. The batch size in training phase decreases to 2, owing to the limitation of my GPU memory.
+2. Some paths are changed.
+3. The return value of detect_image() in yolo.py changed to meet the needs of my detection function
+
 ## Quick Start
 
 1. Download YOLOv3 weights from [YOLO website](http://pjreddie.com/darknet/yolo/).

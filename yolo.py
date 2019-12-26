@@ -13,16 +13,18 @@ from keras.models import load_model
 from keras.layers import Input
 from PIL import Image, ImageFont, ImageDraw
 
-from yolo3.model import yolo_eval, yolo_body, tiny_yolo_body
-from yolo3.utils import letterbox_image
+from .yolo3.model import yolo_eval, yolo_body, tiny_yolo_body
+from .yolo3.utils import letterbox_image
 import os
 from keras.utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
-        "model_path": 'model_data/yolo.h5',
+        #"model_path": 'model_data/yolo.h5',
+        "model_path": 'keras_yolo3/log/000trained_weights_final.h5',
         "anchors_path": 'model_data/yolo_anchors.txt',
-        "classes_path": 'model_data/coco_classes.txt',
+        #"classes_path": 'model_data/coco_classes.txt',
+        "classes_path": 'keras_yolo3/model_data/classes.txt'
         "score" : 0.3,
         "iou" : 0.45,
         "model_image_size" : (416, 416),
@@ -125,7 +127,7 @@ class YOLO(object):
             })
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
-
+        '''
         font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
                     size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
         thickness = (image.size[0] + image.size[1]) // 300
@@ -161,10 +163,10 @@ class YOLO(object):
                 fill=self.colors[c])
             draw.text(text_origin, label, fill=(0, 0, 0), font=font)
             del draw
-
+        '''
         end = timer()
         print(end - start)
-        return image
+        return image, out_boxes, out_classes
 
     def close_session(self):
         self.sess.close()
